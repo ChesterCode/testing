@@ -1,12 +1,12 @@
-import questions as questions
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import questions
-def index(request):
-    questions = questions.objects.all()
-    res = "<h1>Список вопросов</h1>"
-    for item in questions:
-        res += f'<div>\n<p>{item.name}</p>\n</div\n<hr>'
-    return HttpResponse(res)
+from upload.models import questions
+from upload.models import answers
+from upload.models import tests
 
+def index(request):
+    upload = questions.objects.all()
+    return render(request, 'upload/index.html', {'upload': upload, 'title': 'Список вопросов'})
+
+def upload(request):
     return HttpResponse("Страница загрузки")
