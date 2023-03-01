@@ -24,5 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
     path('upload/', upload),
-    path('login/', login_view)
+    path('login/', login_view, name='login')
 ]
