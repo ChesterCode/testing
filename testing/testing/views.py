@@ -12,3 +12,6 @@ def index(request):
     cursor.execute('SELECT COUNT(*) AS COUNT FROM upload_questions')
     count_value = cursor.fetchone()[0]
     return render(request, 'index.html', {'upload': upload, 'title': 'Список вопросов', 'count_value': count_value})
+def delete(request):
+    delete = questions.objects.filter(id=115).delete()
+    return render(request, 'index.html', {'delete': delete})

@@ -17,7 +17,9 @@
     <h4>Число вопросов</h4>
     <p>{{count_value}}</p>
 </div>
-
+<div>
+    <h4><a href="{% url 'delete' %}">Очистить базу данных</a></h4>
+</div>
 
 {% for item in upload%}
 <p>

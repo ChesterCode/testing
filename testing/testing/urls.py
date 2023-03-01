@@ -26,4 +26,5 @@ urlpatterns = [
     path('upload/', upload),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('delete/', delete, name='delete'),
 ]
