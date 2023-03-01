@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
 </head>
+<body>
 <h2>Главная страница</h2>
+{% if request.user.is_authenticated %}
+    <h4>Текущий пользователь: {{ request.user.username }}</h4>
+{% else %}
+    <h4>Текущий пользователь: <a href="{% url 'login' %}">Войти</a> </h4>
+{% endif %}
+
 <h1>{{title}}</h1>
 
 {% for item in upload%}
@@ -13,4 +20,5 @@
 <hr>
 </p>
 {% endfor %}
+</body>
 </html>
