@@ -7,7 +7,7 @@
 <body>
 <h2>Главная страница</h2>
 {% if request.user.is_authenticated %}
-    <h4>Текущий пользователь: {{ request.user.username }}</h4>
+    <h4>Текущий пользователь: {{ request.user.username }} (<a href="{% url 'logout' %}">Выйти</a>)</h4>
 {% else %}
     <h4>Текущий пользователь: <a href="{% url 'login' %}">Войти</a> </h4>
 {% endif %}
