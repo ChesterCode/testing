@@ -8,11 +8,20 @@
 <h2>Главная страница</h2>
 {% if request.user.is_authenticated %}
     <h4>Текущий пользователь: {{ request.user.username }} (<a href="{% url 'logout' %}">Выйти</a>)</h4>
+    <br>
+    <h4><a href="{% url 'upload' %}">Загрузить тест</a></h4>
 {% else %}
     <h4>Текущий пользователь: <a href="{% url 'login' %}">Войти</a> </h4>
 {% endif %}
 
 <h1>{{title}}</h1>
+<div>
+    <h4>Число вопросов</h4>
+    <p>{{count_value}}</p>
+</div>
+<div>
+    <h4><a href="{% url 'delete' %}">Очистить базу данных</a></h4>
+</div>
 
 {% for item in upload%}
 <p>
