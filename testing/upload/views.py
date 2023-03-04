@@ -59,11 +59,13 @@ def upload_file(request):
             db_testName = tests(name = testName, description=testName)
             db_testName.save()
             for Question in range(len(QuestionsArr)):
-                for answer in range(len(Answers)):
-                    db_answer = answers(questions_name = QuestionsArr[Question], answer = Answers[answer][Question], correct = Corrects[answer][Question], comments = '', order = answer)
-                    db_answer.save()
+                answer = Question
                 db_questions = questions(test_name = testName, name = QuestionsArr[Question], type = 'NONE', order= Question)
                 db_questions.save()
+                for answer in range(len(Answers[Question])):
+                    db_answer = answers(questions_name = QuestionsArr[Question], answer = Answers[Question][answer], correct = Corrects[Question][answer], comments = '', order = answer)
+                    db_answer.save()
+
             return HttpResponse('Тест успешно загружен', status=200)
             # >>>
     else:
