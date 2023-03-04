@@ -13,8 +13,11 @@ def index(request):
     count_value = cursor.fetchone()[0]
     return render(request, 'index.html', {'upload': upload, 'title': 'Список вопросов', 'count_value': count_value})
 def delete(request):
-    cursor = connection.cursor()
-    cursor.execute('SELECT min(id) AS COUNT FROM upload_questions')
-    min_value = cursor.fetchone()[0]
-    delete = questions.objects.filter(id=min_value).delete()
+    # cursor = connection.cursor()
+    # cursor.execute('SELECT min(id) AS COUNT FROM upload_questions')
+    # min_value = cursor.fetchone()[0]
+    delete_answer = answers.objects.all().delete()
+    delete_questions = questions.objects.all().delete()
+    delete_tests = tests.objects.all().delete()
+
     return redirect('home')

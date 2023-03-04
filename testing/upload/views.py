@@ -42,25 +42,29 @@ def upload_file(request):
             testName = sheet.cell(row=1, column=1).value
             testDescriptionShort = sheet.cell(row=2, column=1).value
             testDescriptionLong = sheet.cell(row=3, column=1).value
-            Questions = []
+            QuestionsArr = []
             Answers = [[0 for j in range(0)] for i in range(get_nonempty_rows_in_first_column(wb.worksheets[0]))]
             Corrects = [[0 for j in range(0)] for i in range(get_nonempty_rows_in_first_column(wb.worksheets[0]))]
 
             for row in range(get_first_row_by_value(wb.worksheets[0], 1), get_last_used_row(wb.worksheets[0]) + 1):
                 if sheet.cell(row, 1).value is not None:
-                    Questions.append(sheet.cell(row, 2).value)
+                    QuestionsArr.append(sheet.cell(row, 2).value)
                 else:
-                    Answers[len(Questions) - 1].append(sheet.cell(row, 2).value)
+                    Answers[len(QuestionsArr) - 1].append(sheet.cell(row, 2).value)
                     if sheet.cell(row, 3).value == 0:
-                        Corrects[len(Questions) - 1].append(False)
+                        Corrects[len(QuestionsArr) - 1].append(False)
                     if sheet.cell(row, 3).value == 1:
-                        Corrects[len(Questions) - 1].append(True)
+                        Corrects[len(QuestionsArr) - 1].append(True)
 
-            # for test in range(testName):
-            #     a = tests(name= testName, description= testName)
-            #     a.save()
-
-            return HttpResponse(testName, status=200)
+            db_testName = tests(name = testName, description=testName)
+            db_testName.save()
+            for Question in range(len(QuestionsArr)):
+                for answer in range(len(Answers)):
+                    db_answer = answers(questions_name = QuestionsArr[Question], answer = Answers[answer][Question], correct = Corrects[answer][Question], comments = '', order = answer)
+                    db_answer.save()
+                db_questions = questions(test_name = testName, name = QuestionsArr[Question], type = 'NONE', order= Question)
+                db_questions.save()
+            return HttpResponse('Тест успешно загружен', status=200)
             # >>>
     else:
         upload_file_from = UploadFileForm()
